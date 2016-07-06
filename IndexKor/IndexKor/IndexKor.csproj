@@ -44,6 +44,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="NasaqIndex.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -51,6 +52,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\NerthusPlatform\IQFeedWrapper\IQFeedWrapper\IQFeedWrapper.csproj">
+      <Project>{cb8c6fd1-7aec-497c-bede-03ce122338f9}</Project>
+      <Name>IQFeedWrapper</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\WebTools\WebTools\WebTools.csproj">
       <Project>{fa29099e-44f1-4d1d-9d34-4e3319286d17}</Project>
       <Name>WebTools</Name>
