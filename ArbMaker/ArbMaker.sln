@@ -1,0 +1,40 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArbMaker", "ArbMaker\ArbMaker.csproj", "{68F72007-1B13-43D6-BB8F-7018C7CF8C89}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{467310FC-C639-4751-BCDD-F5A2DD6A0C4B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebTools", "..\..\NerthusPlatform\WebTools\WebTools\WebTools.csproj", "{FA29099E-44F1-4D1D-9D34-4E3319286D17}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|x64 = Debug|x64
+		Release|Any CPU = Release|Any CPU
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{68F72007-1B13-43D6-BB8F-7018C7CF8C89}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{68F72007-1B13-43D6-BB8F-7018C7CF8C89}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{68F72007-1B13-43D6-BB8F-7018C7CF8C89}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{68F72007-1B13-43D6-BB8F-7018C7CF8C89}.Debug|x64.Build.0 = Debug|Any CPU
+		{68F72007-1B13-43D6-BB8F-7018C7CF8C89}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{68F72007-1B13-43D6-BB8F-7018C7CF8C89}.Release|Any CPU.Build.0 = Release|Any CPU
+		{68F72007-1B13-43D6-BB8F-7018C7CF8C89}.Release|x64.ActiveCfg = Release|Any CPU
+		{68F72007-1B13-43D6-BB8F-7018C7CF8C89}.Release|x64.Build.0 = Release|Any CPU
+		{FA29099E-44F1-4D1D-9D34-4E3319286D17}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FA29099E-44F1-4D1D-9D34-4E3319286D17}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FA29099E-44F1-4D1D-9D34-4E3319286D17}.Debug|x64.ActiveCfg = Debug|x64
+		{FA29099E-44F1-4D1D-9D34-4E3319286D17}.Debug|x64.Build.0 = Debug|x64
+		{FA29099E-44F1-4D1D-9D34-4E3319286D17}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FA29099E-44F1-4D1D-9D34-4E3319286D17}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FA29099E-44F1-4D1D-9D34-4E3319286D17}.Release|x64.ActiveCfg = Release|x64
+		{FA29099E-44F1-4D1D-9D34-4E3319286D17}.Release|x64.Build.0 = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
