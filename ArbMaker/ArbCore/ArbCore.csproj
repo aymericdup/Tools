@@ -4,17 +4,15 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{68F72007-1B13-43D6-BB8F-7018C7CF8C89}</ProjectGuid>
-    <OutputType>WinExe</OutputType>
+    <ProjectGuid>{F1965BA0-31B0-4D77-9008-68ACECA226BB}</ProjectGuid>
+    <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ArbMaker</RootNamespace>
-    <AssemblyName>ArbMaker</AssemblyName>
+    <RootNamespace>ArbCore</RootNamespace>
+    <AssemblyName>ArbCore</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -24,7 +22,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -43,60 +40,26 @@
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Deployment" />
-    <Reference Include="System.Drawing" />
     <Reference Include="System.Net.Http" />
-    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ParserFrm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="ParserFrm.Designer.cs">
-      <DependentUpon>ParserFrm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Program.cs" />
+    <Compile Include="Bet\Bet.cs" />
+    <Compile Include="Bet\Odd.cs" />
+    <Compile Include="Parsing\BetParsingInformation.cs" />
+    <Compile Include="Parsing\IParsing.cs" />
+    <Compile Include="Parsing\Parser.cs" />
+    <Compile Include="Parsing\Parsers\BetclicParser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="ParserFrm.resx">
-      <DependentUpon>ParserFrm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
-    <None Include="packages.config" />
-    <None Include="Properties\Settings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
-    </None>
-    <Compile Include="Properties\Settings.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Settings.settings</DependentUpon>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\NerthusPlatform\WebTools\WebTools\WebTools.csproj">
-      <Project>{fa29099e-44f1-4d1d-9d34-4e3319286d17}</Project>
-      <Name>WebTools</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ArbCore\ArbCore.csproj">
-      <Project>{F1965BA0-31B0-4D77-9008-68ACECA226BB}</Project>
-      <Name>ArbCore</Name>
-    </ProjectReference>
     <ProjectReference Include="..\ArbTools\ArbTools.csproj">
       <Project>{7CBF40B4-4CB9-4756-82DB-755C67FF474A}</Project>
       <Name>ArbTools</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
