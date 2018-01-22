@@ -13,6 +13,14 @@ namespace ArbCore.Parsing
         private BookMaker _bookMaker;
         #endregion
 
+        #region properties
+        public string[] Participants { get { return _participants; } set { _participants = value; } }
+        public DateTime Date { get { return _date; } set { _date = value; } }
+        public Odds Odds { get { return _odds; } set { _odds = value; } }
+        public string Url { get { return _url; } set { _url = value; } }
+        public BookMaker BookMaker { get { return _bookMaker; } set { _bookMaker = value; } }
+        #endregion
+
         #region constructor(s)
         public BetParsingInformation(BookMaker bookmaker, string[] participants, DateTime date, Odds odds,  string url = null)
         {

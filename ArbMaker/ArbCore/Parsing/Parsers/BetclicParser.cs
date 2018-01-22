@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using ArbCore.Bet;
 using ArbTools;
 using HtmlAgilityPack;
 
@@ -14,6 +15,8 @@ namespace ArbCore.Parsing.Parsers
     public class BetclicParser : Parser
     {
         #region vars
+        private Uri _BASE_URL_ = new Uri("https://www.betclic.fr");
+        private NumberFormatInfo _numberFormatInfo  = new NumberFormatInfo() { NumberDecimalSeparator = "," };
         #endregion
 
         #region constructor(s)
@@ -22,6 +25,97 @@ namespace ArbCore.Parsing.Parsers
         #region method(s)
 
         #region Parser implementation
+        protected override Odds ReadDetailedFootballPageContent(Stream stream, Odds oldOdd)
+        {
+            Odds odd = new Odds();
+            decimal[] newOdds = new decimal[Odds._NB_ODDS_];
+            try
+            {
+                HtmlDocument document = new HtmlDocument();
+                document.Load(stream);
+
+                #region result
+                HtmlNode matchResult = document.GetElementbyId("market_marketTypeCode_Ftb_Mr3");
+                for (int i = 0; i < matchResult.ChildNodes.Count; i++)
+                {
+                    HtmlNode oddsMultiNode = matchResult.ChildNodes[i];
+                    if (!oddsMultiNode.HasAttributes) continue;
+                    HtmlAttribute classAttribute = oddsMultiNode.Attributes["class"];
+                    if (oddsMultiNode == null) continue;
+
+                    if(classAttribute.Value == "odds multi")
+                    {
+                        HtmlNode trChild = oddsMultiNode.ChildNodes["table"].ChildNodes["tbody"].ChildNodes["tr"];
+
+                        decimal _1 = decimal.Parse(trChild.ChildNodes[1].ChildNodes[3].InnerText, _numberFormatInfo);
+                        if (oldOdd[Odds._1_] != _1) newOdds[Odds._1_] = oldOdd[Odds._1_] = _1;
+
+                        decimal _X = decimal.Parse(trChild.ChildNodes[2].ChildNodes[3].InnerText, _numberFormatInfo);
+                        if (oldOdd[Odds._X_] != _X) newOdds[Odds._X_] = oldOdd[Odds._X_] = _X;
+
+                        decimal _2 = decimal.Parse(trChild.ChildNodes[3].ChildNodes[3].InnerText, _numberFormatInfo);
+                        if (oldOdd[Odds._2_] != _2) newOdds[Odds._2_] = oldOdd[Odds._2_] = _2;
+                        break;
+                    }
+                }
+                #endregion
+
+                #region double chance
+                HtmlNode doucheChanceNode = document.GetElementbyId("market_marketTypeCode_68");
+                for (int i = 0; i < doucheChanceNode.ChildNodes.Count; i++)
+                {
+                    HtmlNode oddsMultiNode = doucheChanceNode.ChildNodes[i];
+                    if (!oddsMultiNode.HasAttributes) continue;
+                    HtmlAttribute classAttribute = oddsMultiNode.Attributes["class"];
+                    if (oddsMultiNode == null) continue;
+
+                    if (classAttribute.Value == "odds multi")
+                    {
+                        #region 1X
+                        HtmlNode trChild = oddsMultiNode.ChildNodes[1].ChildNodes["table"].ChildNodes["tbody"].ChildNodes["tr"];
+
+                        decimal _1X = decimal.Parse(trChild.ChildNodes[3].ChildNodes[3].InnerText, _numberFormatInfo);
+                        if (oldOdd[Odds._1X_] != _1X) newOdds[Odds._1X_] = oldOdd[Odds._1X_] = _1X;
+
+                        decimal _1X_HALF = decimal.Parse(trChild.ChildNodes[4].ChildNodes[3].InnerText, _numberFormatInfo);
+                        if (oldOdd[Odds._1X_Half_] != _1X_HALF) newOdds[Odds._1X_Half_] = oldOdd[Odds._1X_Half_] = _1X_HALF;
+                        #endregion
+
+                        #region 12
+                        trChild = oddsMultiNode.ChildNodes[3].ChildNodes["table"].ChildNodes["tbody"].ChildNodes["tr"];
+
+                        decimal _12 = decimal.Parse(trChild.ChildNodes[3].ChildNodes[3].InnerText, _numberFormatInfo);
+                        if (oldOdd[Odds._12_] != _12) newOdds[Odds._12_] = oldOdd[Odds._12_] = _12;
+
+                        decimal _12_HALF = decimal.Parse(trChild.ChildNodes[4].ChildNodes[3].InnerText, _numberFormatInfo);
+                        if (oldOdd[Odds._12_Half_] != _12_HALF) newOdds[Odds._12_Half_] = oldOdd[Odds._12_Half_] = _12_HALF;
+                        #endregion
+
+                        #region X2
+                        trChild = oddsMultiNode.ChildNodes[5].ChildNodes["table"].ChildNodes["tbody"].ChildNodes["tr"];
+
+                        decimal _X2 = decimal.Parse(trChild.ChildNodes[3].ChildNodes[3].InnerText, _numberFormatInfo);
+                        if (oldOdd[Odds._X2_] != _X2) newOdds[Odds._X2_] = oldOdd[Odds._X2_] = _X2;
+
+                        decimal _X2_HALF = decimal.Parse(trChild.ChildNodes[4].ChildNodes[3].InnerText, _numberFormatInfo);
+                        if (oldOdd[Odds._X2_Half_] != _X2_HALF) newOdds[Odds._X2_Half_] = oldOdd[Odds._X2_Half_] = _X2_HALF;
+                        #endregion
+
+                        break;
+                    }
+                }
+                #endregion
+
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return odd;
+        }
+
         protected override List<BetParsingInformation> ReadFootballPageContent(string content)
         {
             string[] days = new string[] { "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche" };
@@ -97,8 +191,6 @@ namespace ArbCore.Parsing.Parsers
         protected override List<BetParsingInformation> ReadFootballSourceCode(Stream stream)
         {
             List<BetParsingInformation> bets = new List<BetParsingInformation>();
-            NumberFormatInfo numberFormatInfo = new NumberFormatInfo() { NumberDecimalSeparator = "," };
-
             try
             {
                 HtmlDocument document = new HtmlDocument();
@@ -150,50 +242,28 @@ namespace ArbCore.Parsing.Parsers
                                         }
                                         else if(fieldMatchNodeAttribute.Value == "match-odds")
                                         {
-                                            List<decimal> odds = new List<decimal>();
+                                            decimal[] odds = new decimal[Odds._NB_ODDS_]; int index = 0;
                                             foreach(HtmlNode oddNode in fieldMatchNode.ChildNodes)
                                             {
                                                 if (!oddNode.HasAttributes) continue;
                                                 HtmlAttribute oddNodeAttribute = oddNode.Attributes["class"];
                                                 if (oddNodeAttribute == null) continue;
                                                 if (oddNodeAttribute.Value == "match-odd")
-                                                    odds.Add(decimal.Parse(oddNode.ChildNodes["span"].InnerText, numberFormatInfo));
+                                                { 
+                                                    odds[index] = decimal.Parse(oddNode.ChildNodes["span"].InnerText, _numberFormatInfo);
+                                                    index++;
+                                                }
                                             }
 
-                                            bets.Add(new BetParsingInformation(Bet.BookMaker.BETCLIC, participants, datetime, new Bet.Odds(Bet.BookMaker.BETCLIC, odds.ToArray()), url));
+                                            bets.Add(new BetParsingInformation(BookMaker.BETCLIC, participants, datetime, new Odds(BookMaker.BETCLIC, odds), (new Uri(_BASE_URL_, url)).AbsoluteUri));
                                             break;
                                         }
                                     }
                                 }
                             }
                         }
-                    }
-
-                    
+                    }   
                 }
-
-
-                //IEnumerable <HtmlNode> nodes = document.DocumentNode.Descendants("div").Where(div => div.Id.Contains("match_") || div.Id.Contains("entry day-entry grid-9 nm"));
-
-                //foreach (HtmlNode node in nodes)
-                //{
-                //    if (node.Id.Contains("match_"))
-                //    {
-                //        string evt = node.Attributes["data-track-event-name"].Value;
-                //        string link = node.ChildNodes[1].ChildNodes[1].Attributes["href"].Value;
-                //        HtmlNode oddNodes = node.ChildNodes[3];
-                //        List<string> odds = new List<string>();
-                //        for (int i = 1; i < oddNodes.ChildNodes.Count; i = i + 2)
-                //            odds.Add(oddNodes.ChildNodes[i].ChildNodes[1].InnerText);
-                //    }
-                //    else
-                //    {
-                //        string sport = node.Attributes["data_track_sport_name"].Value;
-                //        string competition = node.Attributes["data_track_competition_name"].Value;
-
-                //        string date = node.ChildNodes[3].Attributes["data-date"].Value;
-                //    }
-                //}
                 return bets;
             }
             catch (Exception ex)

@@ -29,12 +29,26 @@ namespace ArbMaker
             }
         }
 
-        private void footballBetclicBtn_Click(object sender, EventArgs e)
+        private async void footballBetclicBtn_Click(object sender, EventArgs e)
         {
             try
             {
                 BetclicParser parser = new BetclicParser();
-                List<BetParsingInformation> bets = parser.ReadPageContent(Sport.FOOTBALL, webPageContentTb.Text);
+                //List<BetParsingInformation> bets = parser.ReadPageContent(Sport.FOOTBALL, webPageContentTb.Text);
+                List<BetParsingInformation> bets = parser.ReadSourceCode(Sport.FOOTBALL, WebPageReader.ReadSourceCode(urlTb.Text));
+                parser.ReadDetailedPageContent(Sport.FOOTBALL, WebPageReader.ReadSourceCode(bets[0].Url), bets[0].Odds);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, ex.Source, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void betclicDetailFootballBtn_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                BetclicParser parser = new BetclicParser();
                 List<BetParsingInformation> bets2 = parser.ReadSourceCode(Sport.FOOTBALL, WebPageReader.ReadSourceCode(urlTb.Text));
             }
             catch (Exception ex)
